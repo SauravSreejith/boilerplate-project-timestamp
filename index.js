@@ -28,7 +28,7 @@ app.get("/api/:date?", function (req, res) {
   }
   let date = new Date(date_string)
   date == "Invalid Date" ? date = new Date(parseInt(date_string)) : undefined
-  if (!date || date == "Invalid Date") return 
+  if (!date || date == "Invalid Date") return res.send({ error : "Invalid Date" }) 
 
   res.send({ unix: date.getTime(), utc: date.toUTCString()})
 });
