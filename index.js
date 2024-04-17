@@ -20,10 +20,15 @@ app.get("/", function (req, res) {
 
 
 // your first API endpoint... 
-app.get("/api/:date", function (req, res) {
+app.get("/api/:date?", function (req, res) {
   const date_string = req.params.date;
+
+  if (!date_string) {
+    return res.send({unix: Date.now(), utc: (new Date(Date.now())).toUTCString()})
+  }
   let date = new Date(date_string)
-  if (date == "Invalid Date") date = new Date(parseInt(date_string))
+  date == "Invalid Date" ? date = new Date(parseInt(date_string)) : undefined
+  if (!date || date == "Invalid Date") return 
 
   res.send({ unix: date.getTime(), utc: date.toUTCString()})
 });
